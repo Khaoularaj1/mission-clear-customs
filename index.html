@@ -368,6 +368,7 @@ hr.dash{border:0;border-top:2px dashed var(--line);margin:16px 0}
 .obld .ospark{animation:ospark 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes ospark{0%,100%{transform:scale(.6);opacity:0}50%{transform:scale(1);opacity:1}}
 .obld.need .oring{opacity:1;animation:pulse 1.2s infinite}
+.obld .obadge{display:none}.obld.need .obadge{display:inline;animation:bob 1.4s ease-in-out infinite}
 .obld .oring{opacity:0;transform-box:fill-box;transform-origin:center}
 /* ---- shared overlay layer (office + workstation) ---- */
 .v2ov{position:fixed;inset:0;z-index:56;display:none}
@@ -640,7 +641,81 @@ html[dir=rtl] #wsBtn{border-radius:0 16px 16px 0;border-inline-end:3px solid #ff
  .dp-doc{padding:6px}
  #office .obar h2{flex-basis:100%}
 }
-</style>
+
+/* ================= VERSION 2.0 · UI/UX LAYER ================= */
+/* wider gameplay area on desktop (port map ~+14%), other pages keep their reading width */
+@media(min-width:1000px){body[data-view="play"] .wrap{max-width:1420px;padding:0 12px}}
+.btn.big{font-size:20px;padding:14px 32px;border-radius:18px}
+/* homepage */
+.homeintro{text-align:center;margin:16px 0 14px}
+.homeintro h2{color:var(--deep);font-size:clamp(20px,2.8vw,28px)}
+.homeintro p{max-width:780px;margin:.4em auto}
+.homecta{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0 6px}
+.homesec{display:flex;gap:4px 18px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.lnk{border:0;background:none;color:var(--deep);font-weight:600;font-size:15px;padding:6px 4px;text-decoration:underline;text-decoration-color:rgba(18,70,110,.25);text-underline-offset:4px}
+.lnk:hover,.lnk:focus-visible{text-decoration-color:var(--deep)}
+.v2card h2{color:var(--deep);font-size:clamp(19px,2.5vw,25px)}
+.modes2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.mode2{background:#f6fbfa;border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.mode2.on{border-color:var(--tq)}
+.mode2 b{font-size:17px;color:var(--deep)}
+.mode2 p{margin:.3em 0 .7em;font-size:15px}
+/* play setup: numbered steps */
+h3.stp{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:16px}
+h3.stp span{background:var(--tq);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;font-size:15px;flex:0 0 auto}
+/* nine-stage progress tracker */
+#ptrk{display:block;background:#fff;border:2px solid var(--line);border-radius:20px;padding:10px 14px 12px;margin:0 0 10px;box-shadow:0 3px 0 rgba(18,70,110,.12)}
+.pt-head{display:flex;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;align-items:baseline;color:var(--deep)}
+.pt-cnt{font-size:13px;color:var(--mut);font-weight:600}
+.pt-list{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(9,minmax(0,1fr))}
+.pt-list li{position:relative;text-align:center}
+.pt-list li:not(:first-child):before{content:"";position:absolute;top:16px;inset-inline-end:50%;width:100%;height:4px;background:#dfe5ea}
+.pt-list li.done:before,.pt-list li.cur:before{background:var(--gr)}
+.pt-list button{position:relative;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;padding:0 3px;font:inherit;color:inherit}
+.pt-list button[disabled]{cursor:default}
+.pt-list .dot{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;background:#eef1f4;color:#7a8794;border:3px solid #fff;box-shadow:0 2px 0 rgba(0,0,0,.12);transition:transform .15s}
+.pt-list .done .dot{background:var(--gr);color:#fff}
+.pt-list .cur .dot{background:var(--ye);color:#4a3300;box-shadow:0 0 0 5px rgba(255,209,102,.45)}
+.pt-list .done button:hover .dot,.pt-list .cur button:hover .dot,.pt-list button:focus-visible .dot{transform:scale(1.12)}
+.pt-list .lb{font-size:11.5px;line-height:1.2;color:var(--mut)}
+.pt-list .done .lb{color:#2c6a35}
+.pt-list .cur .lb{color:var(--deep);font-weight:700}
+.pt-bar{display:none;gap:3px;margin-top:8px}
+.pt-bar i{flex:1;height:9px;border-radius:5px;background:#dfe5ea}
+.pt-bar i.done{background:var(--gr)}.pt-bar i.cur{background:var(--ye)}
+@media(max-width:900px){.pt-list .lb{display:none}.pt-list .dot{width:30px;height:30px;font-size:12px}.pt-list li:not(:first-child):before{top:13px}}
+@media(max-width:600px){.pt-list{display:none}.pt-bar{display:flex}#ptrk{padding:8px 12px}}
+/* procedure timeline */
+.flowcard{margin:14px 0}
+.flowp{margin:.2em 0 .6em}
+/* guided tour */
+#tour{position:fixed;inset:0;z-index:94;display:none}
+#tour.on{display:block}
+#tour .t-dim{position:absolute;inset:0;background:rgba(12,33,52,.62);display:none}
+#tour.nohole .t-dim{display:block}
+#tour.nohole .t-hole{display:none}
+#tour .t-hole{position:absolute;border-radius:14px;box-shadow:0 0 0 4px var(--ye),0 0 0 200vmax rgba(12,33,52,.62);transition:left .35s ease,top .35s ease,width .35s ease,height .35s ease;pointer-events:none}
+#tour .t-card{position:absolute;width:min(420px,calc(100vw - 24px));background:var(--cream);border:4px solid #fff;border-radius:22px;box-shadow:0 14px 40px rgba(0,0,0,.35);padding:12px 14px;transition:left .35s,top .35s;outline:none}
+#tour.nohole .t-card{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:min(500px,calc(100vw - 24px))}
+#tour .t-card.dock{left:10px!important;right:10px;bottom:10px;top:auto!important;width:auto;max-height:70vh;overflow:auto}
+.t-top{display:flex;align-items:center;gap:8px}
+.t-step{font-size:12px;font-weight:700;color:var(--tqd);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.t-dots{display:flex;gap:4px;flex:1}
+.t-dots i{width:8px;height:8px;border-radius:4px;background:#d8dee3}.t-dots i.on{background:var(--tq);width:18px}.t-dots i.past{background:#8fd6cf}
+.t-x{border:0;background:#fff;border-radius:50%;width:32px;height:32px;font-weight:700;color:var(--deep)}
+.t-body{display:flex;gap:12px;margin:8px 0 10px}
+.t-ic{font-size:34px;line-height:1}
+.t-body h3{margin:0 0 4px;color:var(--deep)}
+.t-body p{margin:0;font-size:15.5px}
+.t-btns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.t-art{display:block;width:140px;margin:8px auto 4px}
+.t-apps{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.t-apps span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12.5px}
+.t-mini{display:flex;gap:4px;margin-top:10px;justify-content:center;flex-wrap:wrap}
+.t-mini span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:#eef1f4;color:#7a8794}
+.t-mini .done{background:var(--gr);color:#fff}.t-mini .cur{background:var(--ye);color:#4a3300}
+.rm #tour *{transition:none!important}
+@media(max-width:760px){.modes2{grid-template-columns:1fr}.btn.big{font-size:18px;padding:12px 24px}}</style>
 </head>
 <body>
 <header id="nav"><div class="wrap"></div></header>
@@ -1120,9 +1195,9 @@ function mountScene(el,p,onClick,name,ch){
  ${[60,180,420,640,860,1100].map(x=>`<rect x="${x}" y="328" width="10" height="10" rx="3" fill="#5d6770"/>`).join("")}
  ${crane(560,"")+crane(760,"b")}
  <g id="${p}cargo" style="transition:opacity 1s">${box(380,372,"#ffd166")+box(424,372,"#17b3a8")+box(402,354,"#ef5d60")}</g>
- <g>${box(900,372,"#2a86c8")+box(944,372,"#ff9f1c")+box(988,372,"#6cc070")+box(922,354,"#ffd166")+box(966,354,"#ef5d60")}<rect x="1060" y="352" width="110" height="46" rx="6" fill="#d8dee3"/><path d="M1054 356l61 -22l61 22z" fill="#9fb0bd"/><rect x="1100" y="370" width="30" height="28" rx="3" fill="#7f8f9c"/><rect x="40" y="356" width="120" height="44" rx="6" fill="#d8dee3"/><path d="M34 360l66 -22l66 22z" fill="#9fb0bd"/><rect x="60" y="374" width="34" height="26" rx="3" fill="#7f8f9c"/></g>
+ <g>${box(900,372,"#2a86c8")+box(944,372,"#ff9f1c")+box(988,372,"#6cc070")+box(922,354,"#ffd166")+box(966,354,"#ef5d60")}<rect x="1060" y="352" width="110" height="46" rx="6" fill="#d8dee3"/><path d="M1054 356l61 -22l61 22z" fill="#9fb0bd"/><rect x="1100" y="370" width="30" height="28" rx="3" fill="#7f8f9c"/><g id="${p}wh"><rect x="40" y="356" width="120" height="44" rx="6" fill="#d8dee3"/><path d="M34 360l66 -22l66 22z" fill="#9fb0bd"/><rect x="60" y="374" width="34" height="26" rx="3" fill="#7f8f9c"/></g></g>
  <g class="lorry"><g transform="translate(0,414)"><rect x="0" y="-18" width="44" height="18" rx="3" fill="#6cc070"/><rect x="46" y="-14" width="18" height="14" rx="4" fill="#fff8ea"/><circle cx="12" cy="2" r="5" fill="#22313f"/><circle cx="34" cy="2" r="5" fill="#22313f"/><circle cx="56" cy="2" r="5" fill="#22313f"/></g></g>
- ${palm(196,430,.9)+palm(1168,520,1)+palm(660,548,.8)+palm(30,560,.9)+palm(880,640,.9)}
+ ${palm(196,430,.9)+palm(1168,520,1)+palm(660,548,.8)+`<g id="${p}lp">${palm(30,560,.9)}</g>`+palm(880,640,.9)}
  <path d="${ROAD}" stroke="#c9b17c" stroke-width="46" fill="none" stroke-linecap="round" opacity=".7"/><path id="${p}road" d="${ROAD}" stroke="#66717b" stroke-width="34" fill="none" stroke-linecap="round"/><path d="${ROAD}" stroke="#ffe9a8" stroke-width="3" fill="none" stroke-dasharray="12 12"/>
  <g id="${p}blds"></g>
  <g class="mtruck" id="${p}truck" style="opacity:0"><g transform="translate(150,474)"><rect x="-64" y="-40" width="64" height="36" rx="5" fill="#17b3a8"/><text x="-32" y="-17" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" font-family="inherit">ATLAS SCOLAIRE</text><path d="M-90 -4v-18a8 8 0 0 1 8 -8h16v26z" fill="#ffd166"/><rect x="-86" y="-25" width="14" height="10" rx="2" fill="#bfe9f2"/><circle cx="-76" cy="0" r="7" fill="#22313f"/><circle cx="-44" cy="0" r="7" fill="#22313f"/><circle cx="-16" cy="0" r="7" fill="#22313f"/></g></g>
@@ -1130,18 +1205,25 @@ function mountScene(el,p,onClick,name,ch){
  const road=el.querySelector("#"+p+"road"),LEN=road.getTotalLength(),L=STF.map(f=>f*LEN),pts=L.map(l=>road.getPointAtLength(l));
  el.querySelector("#"+p+"blds").innerHTML=[5,6,7,8,0,1,2,3,4].map(i=>bldSVG(i,pts[i].x,pts[i].y,p)).join("");
  const hero=el.querySelector("#"+p+"hero");let hi=hero.querySelector(".hero"),face=hero.querySelector(".face"),curName=name,gearOn=false;
- let cur=6,raf=0,skip=null;
- const place=l=>{const q=road.getPointAtLength(l);hero.setAttribute("transform",`translate(${q.x.toFixed(1)},${(q.y+8).toFixed(1)}) scale(.82)`);cur=l};
+ let cur=6,raf=0,skip=null,off=null; /* off: the hero stands on a side footpath {p:path,at:road length where it joins} */
+ const putOn=(pe,l)=>{const q=pe.getPointAtLength(l);hero.setAttribute("transform",`translate(${q.x.toFixed(1)},${(q.y+8).toFixed(1)}) scale(.82)`)};
+ const place=l=>{putOn(road,l);cur=l;off=null};
+ /* generic walk along any path, from length a to length b */
+ const run=(pe,a,b,set,cb,fast)=>{const dist=Math.abs(b-a);if(document.body.classList.contains("rm")||dist<4){set(b);cb&&cb();return}
+  const dur=dist/(fast?900:330)*1000;let t0=0;hi.classList.add("walk");let dirPrev=1;
+  const end=()=>{cancelAnimationFrame(raf);set(b);hi.classList.remove("walk");skip=null;cb&&cb()};skip=end;
+  const fr=t=>{if(!t0)t0=t;const k=Math.min(1,(t-t0)/dur),l=a+(b-a)*k,p1=pe.getPointAtLength(l),p2=pe.getPointAtLength(l+(b>a?4:-4));const dir=p2.x>=p1.x?1:-1;if(dir!==dirPrev){face.setAttribute("transform",`scale(${dir},1)`);dirPrev=dir}set(l);if(k<1)raf=requestAnimationFrame(fr);else end()};
+  face.setAttribute("transform","scale(1,1)");raf=requestAnimationFrame(fr)};
  place(6);
  const api={el,
   mark(lv,all){el.querySelectorAll(".bld").forEach(b=>{const i=+b.dataset.i;b.classList.toggle("done",!all&&i<lv);b.classList.toggle("cur",!all&&i===lv);b.classList.toggle("lock",!all&&i>lv)})},
   put(i){place(i<0?6:L[i])},
   walk(i,cb,fast){api.walkL(L[i],cb,fast)},
-  walkL(to,cb,fast){const from=cur,dist=Math.abs(to-from);if(document.body.classList.contains("rm")||dist<4){place(to);cb&&cb();return}
-   const dur=dist/(fast?900:330)*1000;let t0=0;hi.classList.add("walk");let dirPrev=1;
-   const end=()=>{cancelAnimationFrame(raf);place(to);hi.classList.remove("walk");skip=null;cb&&cb()};skip=end;
-   const fr=t=>{if(!t0)t0=t;const k=Math.min(1,(t-t0)/dur),l=from+(to-from)*k,a=road.getPointAtLength(l),b2=road.getPointAtLength(l+(to>from?4:-4));const dir=b2.x>=a.x?1:-1;if(dir!==dirPrev){face.setAttribute("transform",`scale(${dir},1)`);dirPrev=dir}place(l);if(k<1)raf=requestAnimationFrame(fr);else end()};
-   face.setAttribute("transform","scale(1,1)");raf=requestAnimationFrame(fr)},
+  walkL(to,cb,fast){if(off){const o=off;off=null;run(o.p,o.p.getTotalLength(),0,l=>putOn(o.p,l),()=>{place(o.at);api.walkL(to,cb,fast)},fast);return}
+   run(road,cur,to,place,cb,fast)},
+  /* walk along the road to the start of a side footpath, then along the footpath (used for the broker's office) */
+  walkPath(pe,at,cb,fast){if(off&&off.p===pe){cb&&cb();return}api.walkL(at,()=>run(pe,0,pe.getTotalLength(),l=>putOn(pe,l),()=>{off={p:pe,at};cb&&cb()},fast),fast)},
+  pos(){return off?-1:cur},
   skip(){skip&&skip()},
   act(c,ms){hi.classList.remove("cheer","confused","wavehi");void hi.getBBox();hi.classList.add(c);setTimeout(()=>hi.classList.remove(c),ms||2200)},
   pop(i){const b=el.querySelector(`.bld[data-i="${i}"]`);b.classList.remove("pop");void b.getBBox();b.classList.add("pop")},
@@ -1155,7 +1237,7 @@ function mountScene(el,p,onClick,name,ch){
   name(n){curName=n;n=n||(typeof t==="function"?t("you"):"You");hero.querySelector(".nm").textContent=n;const w=Math.max(50,(n||"You").length*8+18),r=hero.querySelector(".nmb");r.setAttribute("width",w);r.setAttribute("x",-w/2)}
  };
  api.name(name);
- if(typeof v2Scene==="function")v2Scene(el,p,api,LEN,road);
+ api.len=LEN;if(typeof v2Scene==="function")v2Scene(el,p,api,LEN,road);
  el.querySelectorAll(".bld").forEach(b=>{const go=()=>onClick&&onClick(+b.dataset.i);b.addEventListener("click",go);b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}})});
  return api;
 }
@@ -2026,7 +2108,7 @@ function hud(){const e=$("#hud");if(!e)return;const done=Math.min(S.lv,9);
  <div class="hudb"><button id="folderBtn">📁 ${t("myFile")} (${bd(S.file.length)})</button><button class="btn wh sm" id="bShip">📦 ${t("shipment")}</button><button class="btn wh sm" data-v="timeline">🗓 ${t("nav_timeline")}</button><span class="sp" style="flex:1"></span><span class="pill sm">${S.mode==="class"?t("modeClass"):t("modeFull")}</span><button class="btn wh sm" id="bRestart">↺ ${t("restart")}</button></div>`);
  $("#folderBtn").onclick=openFolder;$("#bShip").onclick=openShipment;$("#bRestart").onclick=confirmRestart;updFab()}
 function renderPlay(){const v=$("#v-play");
- if(!S.mode){H(v,`<div class="card startc"><h2>▶ ${t("startTitle")}</h2><p>${t("askName")}</p><input id="nm" maxlength="14" placeholder="${esc(t("namePh"))}" value="${esc(S.name||"")}"><h3>${t("chooseChar")}</h3>${charPicker()}${playPicker()}<h3>${t("chooseMode")}</h3><div class="grid2" style="text-align:start"><div class="card"><h3>⚡ ${t("modeClass")}</h3><p>${t("modeClassTxt")}</p><button class="btn" id="mC">${t("playClass")}</button></div><div class="card"><h3>🎓 ${t("modeFull")}</h3><p>${t("modeFullTxt")}</p><button class="btn tq" id="mF2">${t("playFull")}</button></div></div><p class="sm">${t("scoring")}</p></div>`);
+ if(!S.mode){H(v,`<div class="card startc"><h2>▶ ${t("startTitle")}</h2><h3 class="stp"><span>1</span> ${t2("setupName")}</h3><p>${t("askName")}</p><input id="nm" maxlength="14" placeholder="${esc(t("namePh"))}" value="${esc(S.name||"")}"><h3 class="stp"><span>2</span> ${t("chooseChar")}</h3>${charPicker()}${playPicker()}<h3 class="stp"><span>4</span> ${t2("chooseDur")}</h3><p class="sm" style="margin-top:0">${t2("durNote")}</p><div class="grid2" style="text-align:start"><div class="card"><h3>⚡ ${t("modeClass")}</h3><p>${t("modeClassTxt")}</p><button class="btn" id="mC">${t("playClass")}</button></div><div class="card"><h3>🎓 ${t("modeFull")}</h3><p>${t("modeFullTxt")}</p><button class="btn tq" id="mF2">${t("playFull")}</button></div></div><p class="sm">${t("scoring")}</p></div>`);
   const go=m=>{const ch=S.char||LS.get(CKEY);if(!ch){toast(t("pickCharFirst"));const c=$(".chars");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");return}
    const nm=($("#nm").value.trim()||t("defName")).slice(0,14);S=S0();S.name=nm;S.char=ch;S.mode=m;S.play=PLAYSEL;LS.set(AKEY,S.play);save();snd("enter");renderPlay();updFab()};
   $("#mC").onclick=()=>go("class");$("#mF2").onclick=()=>go("full");return}
@@ -2500,6 +2582,62 @@ WSS.ar={
  calc:{say:"جا الوقت ديال الحاسبة: صاوب القيمة فالديوانة، ومن بعد قارن الحساب بالتفضيل وبلا بيه.",q:"صادق على القيمة فالديوانة والسيناريوهين فحاسبة الديوانة.",hint:"الفاتورة + الشحن + التأمين، ومن بعد × 11. النسب كاينين ففيش ADIL.",ok:"<bdi>8,100 EUR × 11 = 89,100 MAD</bdi>. بالتفضيل الحساب هو <bdi>222.75 MAD</bdi>؛ بلا بيه <bdi>35,862.75 MAD</bdi> بنسبة التمرين.",no:"الحساب مازال ماتصادقش."},
  ml:{say:"الملف ديالك تقريباً كامل. حل تتبّع الشحنة، شوف الوضعية، خلّص الرسوم (محاكاة) وطلب الـ Mainlevée.",q:"طلب الـ Mainlevée الخيالية فتتبّع الشحنة.",hint:"المبلغ اللي خاصو يتخلص هو المجموع ديال السيناريو اللي كيتطبق فورقة الحساب ديالك.",ok:"كاع الإجراءات الجمركية تكمّلات: الـ Mainlevée الخيالية فالملف ديالك. مازال خاص أمر التسليم من الناقل باش تخرج من المرسى.",no:"الـ Mainlevée مازال ماتطلبات."}};
 
+/* ============ VERSION 2.0 · UI/UX STRINGS (homepage, setup, tracker, tour) ============ */
+Object.assign(U2.en,{
+ setupName:"Your name",chooseDur:"Choose the mission length",durNote:"Duration is separate from the gameplay type chosen above.",
+ officeShort:"Broker's Office · HQ",
+ v2Title:"Version 2.0 — The Customs Broker Experience",
+ v2Intro:"Step into the role of a customs broker at the Port of Casablanca! Guide an international shipment through Morocco's import procedures, explore real-world-inspired documents, complete interactive customs simulations, and work your way toward the final mainlevée.",
+ guidedHome:"Learn the customs clearance process step by step with explanations, challenges and helpful guidance.",
+ immHome:"Take a more active role as a customs broker by using your workstation to complete realistic import-related tasks.",
+ continueAt:"Continue · {0}",startThis:"Choose this mode",
+ curObj:"Current objective",lvOf:"Level {0} of 9 — {1}",stagesDone:"{0}/9 stages completed",allStagesDone:"All nine stages completed!",
+ pt_done:"completed (open the explanation)",pt_cur:"current stage",pt_lock:"locked",trackAria:"Mission progress: nine customs clearance stages",
+ tourBtn:"Help · Website tour",tourStep:"Step {0} of {1}",tourNext:"Next",tourBack:"Back",tourSkip:"Skip Tour",tourStart:"Start My Mission",
+ tour1T:"Welcome to Mission: Clear Customs!",tour1:"Welcome to the Port of Casablanca! You're about to discover how goods are imported into Morocco by stepping into the role of a customs broker. Your shipment must pass nine customs clearance stages.",
+ tour2T:"Play Mission",tour2:"This is where your adventure begins. Choose your character, select your gameplay mode and complete the nine customs clearance stages. 🧭 Guided Mode explains each step; 🖥 Immersive Mode asks you to do the practical tasks on your computer.",
+ tour3T:"Your Customs Broker's Office",tour3:"Your office is your professional headquarters. Access your computer to research customs requirements, prepare documents and manage the import process. It opens once your mission has started.",
+ tour4T:"Document Library",tour4:"Explore the documents used in international trade, understand their purpose and discover how information connects across an import file. You will also find the DUM Explorer and your own import file.",
+ tour5T:"Procedure Timeline",tour5:"Follow the customs clearance procedure step by step and understand the order of operations, the responsibilities of each actor and how information moves between documents.",
+ tour6T:"Progress and Tracking",tour6:"Follow your progress through the nine stages. Completed checkpoints are marked, your current objective is highlighted, and upcoming stages remain locked until you advance. Ready? Your shipment is waiting!"
+});
+Object.assign(U2.fr,{
+ setupName:"Votre prénom",chooseDur:"Choisissez la durée de la mission",durNote:"La durée est indépendante du type de jeu choisi plus haut.",
+ officeShort:"Bureau du transitaire · QG",
+ v2Title:"Version 2.0 — Dans la peau d'un transitaire",
+ v2Intro:"Plongez dans le quotidien d'un transitaire au port de Casablanca ! Accompagnez une marchandise à travers les différentes étapes de l'importation au Maroc, découvrez les documents du commerce international, réalisez des simulations interactives et progressez jusqu'à l'obtention de la mainlevée.",
+ guidedHome:"Apprenez la procédure de dédouanement étape par étape, avec des explications, des défis et un accompagnement.",
+ immHome:"Jouez un rôle plus actif de transitaire : utilisez votre poste de travail pour réaliser des tâches d'importation réalistes.",
+ continueAt:"Continuer · {0}",startThis:"Choisir ce mode",
+ curObj:"Objectif actuel",lvOf:"Niveau {0} sur 9 — {1}",stagesDone:"{0}/9 étapes franchies",allStagesDone:"Les neuf étapes sont franchies !",
+ pt_done:"terminée (ouvrir l'explication)",pt_cur:"étape en cours",pt_lock:"verrouillée",trackAria:"Progression de la mission : neuf étapes du dédouanement",
+ tourBtn:"Aide · Visite du site",tourStep:"Étape {0} sur {1}",tourNext:"Suivant",tourBack:"Retour",tourSkip:"Passer la visite",tourStart:"Commencer ma mission",
+ tour1T:"Bienvenue dans Mission: Clear Customs !",tour1:"Bienvenue au port de Casablanca ! Vous allez découvrir comment une marchandise est importée au Maroc en vous mettant dans la peau d'un transitaire. Votre expédition doit franchir neuf étapes de dédouanement.",
+ tour2T:"Jouer la mission",tour2:"C'est ici que commence l'aventure. Choisissez votre personnage, votre type de jeu, puis franchissez les neuf étapes du dédouanement. 🧭 Le mode guidé explique chaque étape ; 🖥 le mode immersif vous fait réaliser les tâches pratiques sur votre ordinateur.",
+ tour3T:"Votre bureau de transitaire",tour3:"Votre bureau est votre quartier général. Votre ordinateur vous permet de rechercher les exigences douanières, de préparer les documents et de gérer l'importation. Il s'ouvre une fois la mission commencée.",
+ tour4T:"Bibliothèque de documents",tour4:"Explorez les documents du commerce international, comprenez leur rôle et découvrez comment les informations circulent dans un dossier d'importation. Vous y trouverez aussi l'Explorateur DUM et votre dossier d'import.",
+ tour5T:"Chronologie de la procédure",tour5:"Suivez la procédure de dédouanement pas à pas : l'ordre des opérations, le rôle de chaque intervenant et la circulation des informations entre les documents.",
+ tour6T:"Progression et suivi",tour6:"Suivez votre progression dans les neuf étapes. Les étapes franchies sont cochées, l'objectif actuel est mis en avant et les étapes suivantes restent verrouillées jusqu'à ce que vous avanciez. Prêt·e ? Votre marchandise vous attend !"
+});
+Object.assign(U2.ar,{
+ setupName:"سميتك",chooseDur:"ختار[[|ي]] المدة ديال المهمة",durNote:"المدة ماعندها علاقة بنوع اللعب اللي ختاريتي الفوق.",
+ officeShort:"مكتب الترانزيتير",
+ v2Title:"النسخة 2.0 — عيش تجربة الترانزيتير",
+ v2Intro:"دخل[[|ي]] للدور ديال الترانزيتير فمرسى الدار البيضاء! رافق[[|ي]] شحنة جاية من برا فكاع المراحل ديال الاستيراد للمغرب، تعرّف[[|ي]] على وثائق مستوحاة من الواقع، دير[[|ي]] محاكاة جمركية تفاعلية، وكمّل[[|ي]] الطريق حتى تاخد[[|ي]] الـ Mainlevée فالأخير.",
+ guidedHome:"تعلّم[[|ي]] مسطرة الديدوانما خطوة بخطوة، بالشروحات والتحديات ومع شي واحد كيعاونك.",
+ immHome:"خود[[|ي]] دور أكبر كترانزيتير: خدم[[|ي]] بالحاسوب ديالك باش تدير[[|ي]] مهام استيراد قريبة من الواقع.",
+ continueAt:"كمّل · {0}",startThis:"ختار هاد الوضع",
+ curObj:"الهدف دابا",lvOf:"المستوى {0} من 9 — {1}",stagesDone:"{0}/9 مراحل تكمّلو",allStagesDone:"التسعة ديال المراحل تكمّلو!",
+ pt_done:"تكمّلات (حل الشرح)",pt_cur:"المرحلة الحالية",pt_lock:"مسدودة",trackAria:"التقدم فالمهمة: تسعة ديال مراحل الديدوانما",
+ tourBtn:"مساعدة · جولة فالموقع",tourStep:"الخطوة {0} من {1}",tourNext:"الجاي",tourBack:"رجوع",tourSkip:"دوز الجولة",tourStart:"بدا المهمة ديالي",
+ tour1T:"مرحبا بيك فـ Mission: Clear Customs!",tour1:"مرحبا بيك فمرسى الدار البيضاء! غادي تكتاشف[[|ي]] كيفاش كتدخل السلعة للمغرب ملي تاخد[[|ي]] الدور ديال الترانزيتير. الشحنة ديالك خاصها تدوز من تسعة ديال مراحل الديدوانما.",
+ tour2T:"العب المهمة",tour2:"هنا كتبدا المغامرة. ختار[[|ي]] الشخصية ديالك ونوع اللعب، ودوّز[[|ي]] التسعة ديال المراحل. 🧭 الوضع الموجّه كيشرح كل مرحلة؛ 🖥 الوضع الغامر كيخليك دير[[|ي]] المهام التطبيقية فالحاسوب.",
+ tour3T:"المكتب ديالك كترانزيتير",tour3:"المكتب هو المقر ديالك. من الحاسوب كتقلّب[[|ي]] على الشروط الجمركية، كتوجّد[[|ي]] الوثائق وكتسيّر[[|ي]] الاستيراد. كيتحل ملي تبدا المهمة.",
+ tour4T:"مكتبة الوثائق",tour4:"تعرّف[[|ي]] على الوثائق ديال التجارة الدولية، علاش كتصلح، وكيفاش المعلومات كتدوز من وثيقة لوثيقة فملف الاستيراد. تما كاين حتى مستكشف الـ DUM والملف ديالك.",
+ tour5T:"مراحل المسطرة",tour5:"تبّع[[|ي]] مسطرة الديدوانما خطوة بخطوة: الترتيب ديال العمليات، الدور ديال كل طرف وكيفاش كتدوز المعلومة بين الوثائق.",
+ tour6T:"التقدم والتتبع",tour6:"تبّع[[|ي]] التقدم ديالك فالتسعة ديال المراحل. المراحل اللي سالاو عليهم علامة، الهدف الحالي باين، والمراحل الجاية مسدودة حتى توصل[[|ي]] ليهم. واجد[[|ة]]؟ الشحنة ديالك كتسناك!"
+});
+
 /* =====================================================================================
    VERSION 2.0 · THE CUSTOMS BROKER EXPERIENCE
    Broker's office · permanent workstation shortcut · ADIL / PortNet / BADR simulators ·
@@ -2554,24 +2692,40 @@ function wsStepWire(s){const r=$("#bR");if(r){r.disabled=true;r.title=t2("noReve
 function wsPulse(){const g=$("#wsGo");if(g){g.classList.remove("ready");void g.offsetWidth;g.style.animation="shake .35s";setTimeout(()=>g.style.animation="",400)}}
 
 /* =========================== PORT: BROKER'S OFFICE BUILDING =========================== */
-function officeSVG(p,live){const lbl=esc(t2("officeName"));
+/* The broker's office is the player's headquarters, not a tenth checkpoint: it stands in its own corner of the port
+   (west quay, where a grey warehouse used to be), reached by a short footpath, away from the nine-stage route. */
+const OFFICE={x:86,y:434,s:.92,pathA:"M40 612C24 572 24 528 44 496S76 458 86 446",pathB:"M70 468Q78 458 86 446"};
+function officeSVG(p,live){const lbl=esc(t2("officeName")),pill=t2("officeShort"),w=Math.max(120,pill.length*7.2+40);
  return `<g class="obld${live?"":" deco"}"${live?` tabindex="0" role="button" aria-label="${lbl}"`:` aria-hidden="true"`}><title>${lbl}</title>
- <ellipse class="oring" cx="0" cy="0" rx="58" ry="13" fill="none" stroke="#ffd166" stroke-width="5"/><ellipse cx="0" cy="2" rx="52" ry="8" fill="rgba(60,40,10,.22)"/>
- <rect x="-46" y="-72" width="92" height="72" rx="5" fill="#fbf6ec"/><path d="M30 -72h10a6 6 0 0 1 6 6v66h-16z" fill="#000" opacity=".06"/>
- <rect x="-46" y="-14" width="92" height="12" fill="url(#${p}zl)"/><rect x="-46" y="-16" width="92" height="2.4" fill="#0e8f87"/><rect x="-46" y="-2.5" width="92" height="2.5" fill="#0b6f69"/>
- <path d="M-54 -68L0 -98L54 -68Z" fill="url(#${p}zg)" stroke="#1e6a42" stroke-width="2.4" stroke-linejoin="round"/><rect x="-52" y="-72" width="104" height="5" rx="2" fill="#1e6a42"/>
- <rect x="-44" y="-64" width="88" height="13" rx="3" fill="#12466e"/><text x="0" y="-54.8" text-anchor="middle" font-size="6.6" font-weight="700" fill="#fff" font-family="Arial" letter-spacing=".2">BUREAU DU TRANSITAIRE</text>
- <path d="${hsh(9,11,-18)}" fill="#0e8f87"/><path d="${hsh(6.6,8.6,-18)}" fill="#7a3f22"/><circle cx="3" cy="-10" r="1.1" fill="#f3c969"/>
- <g transform="translate(-28,-22)"><path d="${hsh(9,10.5,-14)}" fill="#0e8f87"/><path d="${hsh(7,8.5,-14)}" fill="#d9f4fb"/><rect x="-5" y="-16" width="10" height="7.5" rx="1" fill="#22313f"/><rect class="oglow" x="-4" y="-15" width="8" height="5.5" fill="#7ef0c0"/><rect x="-1" y="-8.5" width="2" height="3" fill="#22313f"/><rect x="-6" y="-5.5" width="12" height="2" fill="#9a6b3c"/></g>
- <g transform="translate(28,-22)"><path d="${hsh(9,10.5,-14)}" fill="#0e8f87"/><path d="${hsh(7,8.5,-14)}" fill="#d9f4fb"/><rect x="-5" y="-17" width="3" height="10" fill="#ef5d60"/><rect x="-1.5" y="-17" width="3" height="10" fill="#ffd166"/><rect x="2" y="-17" width="3" height="10" fill="#1f5fae"/><rect x="-6" y="-7" width="12" height="2" fill="#9a6b3c"/></g>
- <g class="ospark" transform="translate(42,-92)"><path d="M0 -7L2 -2L7 0L2 2L0 7L-2 2L-7 0L-2 -2Z" fill="#ffd166" stroke="#c8770a" stroke-width="1"/></g>
- <g transform="translate(-50,-82)"><circle r="12" fill="#fff" stroke="#0e8f87" stroke-width="3"/><text y="5" text-anchor="middle" font-size="13">💼</text></g></g>`}
-function v2Scene(el,p,api,LEN,road){const l=LEN*.78,q=road.getPointAtLength(l);api.officeL=l;
- const g=document.createElementNS("http://www.w3.org/2000/svg","g");g.setAttribute("transform",`translate(${q.x.toFixed(1)},${(q.y-20).toFixed(1)}) scale(.88)`);
- g.innerHTML=officeSVG(p,p==="p");el.querySelector("#"+p+"blds").prepend(g);
- if(p==="p"){const b=g.querySelector(".obld");api.officeEl=b;const go=()=>officeClick();b.addEventListener("click",go);b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});b.classList.toggle("need",!!needApp())}}
-function officeClick(){if(!SC.p||clickBld.busy)return;clickBld.busy=true;SC.p.gear(false);snd("click");
- SC.p.walkL(SC.p.officeL,()=>{clickBld.busy=false;snd("enter");openOffice()},true)}
+ <ellipse class="oring" cx="0" cy="4" rx="74" ry="16" fill="none" stroke="#ffd166" stroke-width="6"/>
+ <ellipse cx="0" cy="6" rx="66" ry="11" fill="#e9d3a0" stroke="#d2b77a" stroke-width="2"/><ellipse cx="0" cy="6" rx="52" ry="7" fill="none" stroke="#17b3a8" stroke-width="2" stroke-dasharray="4 3"/>
+ <rect x="-56" y="-82" width="112" height="82" rx="6" fill="#fbf6ec"/><path d="M40 -82h10a6 6 0 0 1 6 6v76h-16z" fill="#000" opacity=".06"/>
+ <rect x="-56" y="-15" width="112" height="13" fill="url(#${p}zl)"/><rect x="-56" y="-17" width="112" height="2.6" fill="#0e8f87"/><rect x="-56" y="-2.5" width="112" height="2.5" fill="#0b6f69"/>
+ <rect x="-56" y="-82" width="112" height="7" fill="url(#${p}zc)"/>
+ <path d="M-64 -78L0 -112L64 -78Z" fill="url(#${p}zg)" stroke="#1e6a42" stroke-width="2.6" stroke-linejoin="round"/><rect x="-62" y="-82" width="124" height="6" rx="2" fill="#1e6a42"/>${zStar(0,-94,.62,"#f3c969")}
+ <rect x="-52" y="-72" width="104" height="16" rx="4" fill="#12466e" stroke="#ffd166" stroke-width="1.6"/><text x="0" y="-60.6" text-anchor="middle" font-size="8.4" font-weight="700" fill="#fff" font-family="Arial" letter-spacing=".3">BUREAU DU TRANSITAIRE</text>
+ <path d="${hsh(13,15.5,-26)}" fill="#0e8f87"/><path d="${hsh(13,15.5,-26)}" fill="none" stroke="#fbf6ec" stroke-width="1.4" stroke-dasharray="2.4 2"/><path d="${hsh(9.5,12,-26)}" fill="#7a3f22"/><path d="M0 0V-38" stroke="#4e2512" stroke-width="1.4"/><circle cx="4" cy="-14" r="1.4" fill="#f3c969"/><circle cx="-4" cy="-14" r="1.4" fill="#f3c969"/>
+ <rect x="-17" y="-2" width="34" height="4" rx="2" fill="#c9b17c"/>
+ <g transform="translate(-36,-26)"><path d="${hsh(10,12,-16)}" fill="#0e8f87"/><path d="${hsh(8,10,-16)}" fill="#d9f4fb"/><rect x="-6" y="-18" width="12" height="9" rx="1" fill="#22313f"/><rect class="oglow" x="-5" y="-17" width="10" height="7" fill="#7ef0c0"/><rect x="-1" y="-9" width="2" height="3" fill="#22313f"/><rect x="-7" y="-6" width="14" height="2" fill="#9a6b3c"/></g>
+ <g transform="translate(36,-26)"><path d="${hsh(10,12,-16)}" fill="#0e8f87"/><path d="${hsh(8,10,-16)}" fill="#d9f4fb"/><rect x="-6" y="-19" width="3.5" height="12" fill="#ef5d60"/><rect x="-2" y="-19" width="3.5" height="12" fill="#ffd166"/><rect x="2" y="-19" width="3.5" height="12" fill="#1f5fae"/><rect x="-7" y="-7" width="14" height="2" fill="#9a6b3c"/></g>
+ <g transform="translate(-48,4)"><path d="M-6 0h12l-2 -10h-8z" fill="#c8643b"/><circle cy="-14" r="6" fill="#3f9c4a"/></g><g transform="translate(48,4)"><path d="M-6 0h12l-2 -10h-8z" fill="#c8643b"/><circle cy="-14" r="6" fill="#3f9c4a"/></g>
+ <g transform="translate(-22,2)"><rect x="-1.5" y="-22" width="3" height="22" fill="#4e2512"/><path d="M-5 -22h10l-2 -8h-6z" fill="#c9a23a"/><rect class="oglow" x="-3" y="-29" width="6" height="6" fill="#ffd166"/></g><g transform="translate(22,2)"><rect x="-1.5" y="-22" width="3" height="22" fill="#4e2512"/><path d="M-5 -22h10l-2 -8h-6z" fill="#c9a23a"/><rect class="oglow" x="-3" y="-29" width="6" height="6" fill="#ffd166"/></g>
+ <g class="ospark" transform="translate(52,-108)"><path d="M0 -7L2 -2L7 0L2 2L0 7L-2 2L-7 0L-2 -2Z" fill="#ffd166" stroke="#c8770a" stroke-width="1"/></g>
+ <g class="obadge" transform="translate(58,-82)"><circle r="11" fill="#ef5d60" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="Arial">!</text></g>
+ <g transform="translate(${Math.max(0,(w/2*OFFICE.s-OFFICE.x+8)/OFFICE.s).toFixed(0)},-128)"><rect x="${-w/2}" y="-13" width="${w}" height="26" rx="13" fill="#12466e" stroke="#ffd166" stroke-width="3"/><text x="0" y="5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="inherit">💼 ${esc(pill)}</text></g></g>`}
+function v2Scene(el,p,api){
+ ["wh","lp"].forEach(k=>{const e=el.querySelector("#"+p+k);if(e)e.style.display="none"});
+ const NS="http://www.w3.org/2000/svg",blds=el.querySelector("#"+p+"blds");
+ const paths=document.createElementNS(NS,"g");paths.setAttribute("class","opaths");
+ paths.innerHTML=[OFFICE.pathA,OFFICE.pathB].map((d,i)=>`<path d="${d}" stroke="#e9d3a0" stroke-width="15" fill="none" stroke-linecap="round"/><path ${i?"":`id="${p}opA"`} d="${d}" stroke="#d2b77a" stroke-width="2" fill="none" stroke-dasharray="5 6" stroke-linecap="round"/>`).join("")+`<path id="${p}opB" d="${OFFICE.pathB}" fill="none" stroke="none"/>`;
+ const g=document.createElementNS(NS,"g");g.setAttribute("transform",`translate(${OFFICE.x},${OFFICE.y}) scale(${OFFICE.s})`);g.innerHTML=officeSVG(p,p==="p");
+ blds.prepend(g);blds.prepend(paths);
+ if(p==="p"){const b=g.querySelector(".obld");api.officeEl=b;api.opA=el.querySelector("#"+p+"opA");api.opB=el.querySelector("#"+p+"opB");
+  const go=()=>officeClick();b.addEventListener("click",go);b.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});b.classList.toggle("need",!!needApp())}}
+/* the hero takes the closer end of the route, then the footpath to the office door, and walks back the same way afterwards */
+function officeClick(){const P=SC.p;if(!P||clickBld.busy)return;snd("click");P.gear(false);
+ const at=P.pos(),LEN=P.len;if(at<0){snd("enter");openOffice();return}clickBld.busy=true;
+ const useA=at<LEN/2;P.walkPath(useA?P.opA:P.opB,useA?0:LEN,()=>{clickBld.busy=false;snd("enter");setTimeout(openOffice,rm()?0:200)},true)}
 
 /* =========================== OFFICE INTERIOR =========================== */
 function officeInterior(){const P=`<defs><pattern id="ozl" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#fbf6ec"/><g transform="translate(10,10)"><rect x="-5" y="-5" width="10" height="10" fill="#1f5fae"/><rect x="-5" y="-5" width="10" height="10" fill="#1f5fae" transform="rotate(45)"/><circle r="2.4" fill="#f3c969"/></g><path d="M0 0h4.5L0 4.5zM20 0h-4.5L20 4.5zM0 20h4.5L0 15.5zM20 20h-4.5L20 15.5z" fill="#17b3a8"/></pattern>
@@ -3106,16 +3260,96 @@ folderHTML=function(inLevel){let h="";
 const _hud=hud;hud=function(){_hud();const p=$("#hud .hudb .pill.sm");if(p)p.textContent=(S.mode==="class"?t("modeClass"):t("modeFull"))+" · "+(isImm()?t2("immShort"):t2("guidedShort"));wsBtnUpd()};
 const _showStep=showStep;showStep=function(){_showStep();const f=$("#bF");if(f&&!$("#bWS")){f.insertAdjacentHTML("afterend",`<button class="btn wh sm" id="bWS" type="button">🖥 ${t2("wsShort")}</button>`);$("#bWS").onclick=()=>wsOpen(null,"port")}};
 const _setLang=setLang;setLang=function(l){_setLang(l);_lvc.clear();Object.keys(_defs).forEach(k=>delete _defs[k]);wsBtnUpd();if($("#ws").classList.contains("open"))wsRefresh();if($("#office").classList.contains("open"))openOffice(true)};
-const _renderHome=renderHome;renderHome=function(){_renderHome();const hb=$("#v-home .homebtns");if(!hb)return;const g=slotInfo("guided"),i=slotInfo("imm"),st=s=>!s?t2("notStarted"):s.fin?t2("finished"):t("levelN",s.lv+1);
- hb.insertAdjacentHTML("afterend",`<div class="card" style="margin:0 0 14px"><h3>🖥 ${t2("v2Title")}</h3><p style="margin:.2em 0">${t2("v2Intro")}</p><div class="slots"><button class="btn ${S.play==="guided"?"":"wh"} sm" type="button" data-sw="guided">🧭 ${t2("playGuided")} · ${st(g)}</button><button class="btn ${S.play==="imm"?"tq":"wh"} sm" type="button" data-sw="imm">🖥 ${t2("playImm")} · ${st(i)}</button></div><p class="sm" style="margin:.5em 0 0">${t2("sharedNote")}</p></div>`)};
 document.addEventListener("click",e=>{const s=e.target.closest("[data-sw]");if(s)switchPlay(s.dataset.sw)});
 function playPicker(){const o=PLAYSEL==="imm"?"guided":"imm",other=slotInfo(o);
- return `<h3>🎮 ${t2("chooseType")}</h3><div class="playsel" role="group" aria-label="${esc(t2("chooseType"))}">${[["guided","🧭",t2("playGuided"),t2("guidedTxt")],["imm","🖥",t2("playImm"),t2("immTxt")]].map(x=>`<button type="button" data-play="${x[0]}" class="${PLAYSEL===x[0]?"on":""}" aria-pressed="${PLAYSEL===x[0]}"><b>${x[1]} ${x[2]}</b><small>${x[3]}</small></button>`).join("")}</div><p class="sm" style="margin:2px 0 0">${t2("typeNote")}</p>${other&&!other.fin?`<div class="note">${t2("otherSlot",o==="imm"?t2("playImm"):t2("playGuided"),other.lv+1)} <button class="btn wh sm" type="button" data-sw="${o}">▶ ${t2("resumeIt")}</button></div>`:""}`}
+ return `<h3 class="stp"><span>3</span> ${t2("chooseType")}</h3><div class="playsel" role="group" aria-label="${esc(t2("chooseType"))}">${[["guided","🧭",t2("playGuided"),t2("guidedTxt")],["imm","🖥",t2("playImm"),t2("immTxt")]].map(x=>`<button type="button" data-play="${x[0]}" class="${PLAYSEL===x[0]?"on":""}" aria-pressed="${PLAYSEL===x[0]}"><b>${x[1]} ${x[2]}</b><small>${x[3]}</small></button>`).join("")}</div><p class="sm" style="margin:2px 0 0">${t2("typeNote")}</p>${other&&!other.fin?`<div class="note">${t2("otherSlot",o==="imm"?t2("playImm"):t2("playGuided"),other.lv+1)} <button class="btn wh sm" type="button" data-sw="${o}">▶ ${t2("resumeIt")}</button></div>`:""}`}
 const _rp=renderPlay;renderPlay=function(){clickBld.busy=false;_rp()};/* a re-mounted scene must never stay "busy" from an interrupted walk */
 const _rf=renderFinal;renderFinal=function(){_rf();const tb=$("#v-final table.t");if(tb&&S.fin)tb.insertAdjacentHTML("beforeend",`<tr><th>${t2("gameplay")}</th><td>${isImm()?t2("playImm"):t2("playGuided")}</td></tr><tr><th>${t2("wsTasks")}</th><td>${bd(ACTS.filter(wsDone).length+" / "+ACTS.length)}</td></tr>`)};
 const _board=board;board=function(){try{const bb=JSON.parse(LS.get(BKEY)||"[]");bb.push({n:S.name+(isImm()?" 🖥":""),s:S.score,m:S.mode,d:new Date().toLocaleDateString()});bb.sort((x,y)=>y.s-x.s);LS.set(BKEY,JSON.stringify(bb.slice(0,10)))}catch(e){}};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#v2n").classList.contains("on"))$("#v2n").classList.remove("on")});
 addEventListener("resize",()=>{if(!$("#ws").classList.contains("open"))return;if(mob()&&!wTop()){const ids=Object.keys(WM.w);if(ids.length)wFocus(ids[ids.length-1])}});
+
+
+/* =====================================================================================
+   VERSION 2.0 · UI / UX LAYER
+   Cleaner homepage · wider port on desktop · nine-stage progress tracker · timeline order ·
+   Help button and first-visit guided tour. Reuses the existing state (S.lv, S.fin, LANG, slots).
+   ===================================================================================== */
+let FIRSTVISIT=false;
+document.body.dataset.view="home";
+/* the current view drives the wider gameplay layout (CSS: body[data-view=play]) */
+const _show=show;show=function(v,sub){document.body.dataset.view=v;_show(v,sub)};
+
+/* ---------- homepage: identity, short introduction, one main call to action, Version 2.0 ---------- */
+renderHome=function(){const resume=S.mode&&!S.fin,g=slotInfo("guided"),im=slotInfo("imm");
+ const st=s=>!s?"":s.fin?t2("finished"):t("levelN",s.lv+1);
+ const main=resume?`<button class="btn big" type="button" data-v="play">▶ ${t("resume",S.lv+1)}</button>`:S.fin?`<button class="btn big" type="button" data-v="final">🏆 ${t("seeResults")}</button>`:`<button class="btn big" type="button" data-v="play">▶ ${t("startMission")}</button>`;
+ const mode=(k,ic,txt,s)=>`<div class="mode2 ${S.play===k?"on":""}"><b>${ic} ${t2(k==="imm"?"playImm":"playGuided")}</b><p>${t2(txt)}</p><button class="btn sm ${S.play===k?"tq":"wh"}" type="button" data-sw="${k}">${s&&!s.fin?"▶ "+t2("continueAt",st(s)):"▶ "+t2("startThis")}</button></div>`;
+ H("#v-home",`<div class="hero-wrap"><div class="scene" id="hScene"></div><div class="title"><h1>MISSION: CLEAR CUSTOMS</h1><div class="sub">${t("edition")}</div><br><div class="tagl">${t("tagline")}</div></div></div>
+ <div class="card homeintro"><h2>${t("homeH")}</h2><p>${t("homeP1")}</p>
+ <div class="homecta">${main}${resume||S.fin?`<button class="btn wh sm" type="button" id="hNew">↺ ${S.fin?t("playAgain"):t("newMission")}</button>`:""}</div>
+ <div class="homesec"><button class="lnk" type="button" id="hShip">📦 ${t("viewShipment")}</button><button class="lnk" type="button" data-v="timeline">🗓 ${t("nav_timeline")}</button><button class="lnk" type="button" data-v="library" data-sub="ref">📚 ${t("nav_library")}</button><button class="lnk" type="button" id="hTour">❔ ${t2("tourBtn")}</button></div></div>
+ <div class="card v2card"><h2>🖥 ${t2("v2Title")}</h2><p>${t2("v2Intro")}</p><div class="modes2">${mode("guided","🧭","guidedHome",g)}${mode("imm","🖥","immHome",im)}</div><p class="sm" style="margin:.6em 0 0">${t2("typeNote")}</p></div>
+ <p class="edu" style="text-align:center;margin-top:14px">${t("eduSim")}</p>`);
+ SC.h=mountScene($("#hScene"),"h",i=>openCP(i),S.name||"",CH());SC.h.mark(0,true);SC.h.put(1);
+ if(!rm())setTimeout(()=>SC.h&&SC.h.act("wavehi",2400),600);
+ $("#hShip").onclick=openShipment;$("#hTour").onclick=()=>startTour(0);if($("#hNew"))$("#hNew").onclick=()=>S.fin?restart():confirmRestart()};
+
+/* ---------- nine-stage progress tracker above the port (reads S.lv / S.fin only: it cannot drift) ---------- */
+function renderTrack(){const sc=$("#pScene");if(!sc||!S.mode)return;let tr=$("#ptrk");if(!tr){tr=document.createElement("nav");tr.id="ptrk";sc.before(tr)}
+ tr.setAttribute("aria-label",t2("trackAria"));const L=S.fin?9:Math.min(S.lv,9),cur=Math.min(L,8);
+ H(tr,`<div class="pt-head"><b>${S.fin?"✅ "+t2("allStagesDone"):"🎯 "+t2("curObj")+" · "+t2("lvOf",cur+1,LV[cur].t)}</b><span class="pt-cnt">${t2("stagesDone",L)}</span></div>
+ <ol class="pt-list">${LV.map((l,i)=>{const s=i<L?"done":i===L?"cur":"lock";return `<li class="${s}"><button type="button" data-pt="${i}" ${s==="lock"?"disabled":""} title="${esc(l.t)}" aria-label="${esc(t("levelN",i+1)+" · "+l.t+" · "+t2("pt_"+s))}"${s==="cur"?` aria-current="step"`:""}><span class="dot">${s==="done"?"✔":s==="lock"?"🔒":i+1}</span><span class="lb">${l.t}</span></button></li>`}).join("")}</ol>
+ <div class="pt-bar" aria-hidden="true">${LV.map((l,i)=>`<i class="${i<L?"done":i===L?"cur":""}"></i>`).join("")}</div>`);
+ /* completed stages open their explanation (read-only); the current stage enters the level like the map does */
+ tr.onclick=e=>{const b=e.target.closest("[data-pt]");if(!b||b.disabled)return;const i=+b.dataset.pt;if(i<L)openCP(i);else if(i===L&&!S.fin)clickBld(i)}}
+const _hudT=hud;hud=function(){_hudT();renderTrack()};
+
+/* ---------- procedure timeline: "how information moves" right after the introduction ---------- */
+const _rt=renderTimeline;renderTimeline=function(){_rt();const v=$("#v-timeline"),intro=v.querySelector(":scope > .card.intro"),fl=v.querySelector(":scope > .card .flow");
+ if(intro&&fl){const fc=fl.closest(".card");fc.classList.add("flowcard");const h=fc.querySelector("h3");if(h&&!fc.querySelector(".flowp"))h.insertAdjacentHTML("afterend",`<p class="flowp">${t("flowP")}</p>`);intro.after(fc)}};
+
+/* ---------- Help / website tour button in the navigation bar ---------- */
+const _rn=renderNav;renderNav=function(){_rn();const s=$("#bSet");if(s&&!$("#bTour")){s.insertAdjacentHTML("beforebegin",`<button class="ib" id="bTour" type="button" title="${esc(t2("tourBtn"))}" aria-label="${esc(t2("tourBtn"))}">❔</button>`);$("#bTour").onclick=()=>startTour(0)}};
+
+/* ---------- first visit: language → tour offer; changing language never touches progress ---------- */
+const _slT=setLang;setLang=function(l){_slT(l);if(FIRSTVISIT){FIRSTVISIT=false;if(!LS.get(TKEY))setTimeout(()=>startTour(0),350)}else if(TS>=0)drawTour()};
+
+/* =========================== GUIDED TOUR =========================== */
+const TKEY="mcc_ma_tour";let TS=-1,TFOC=null;
+const vis=s=>{const e=$(s);if(!e)return null;const r=e.getBoundingClientRect();return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=="hidden"?e:null};
+const TOUR=[
+ {ic:"⚓",sel:()=>null},
+ {ic:"▶",sel:()=>vis('#nav .tab[data-v="play"]')},
+ {ic:"💼",sel:()=>CUR==="play"&&vis("#pScene .obld")||vis("#wsBtn"),art:()=>`<svg class="t-art" viewBox="-80 -146 160 168" aria-hidden="true"><defs>${zDefs("t")}</defs>${officeSVG("t",false)}</svg><div class="t-apps">${["adil","pn","badr","files","calc","trk"].map(a=>`<span>${APPS[a].ic} ${APPS[a].name()}</span>`).join("")}</div>`},
+ {ic:"📚",sel:()=>vis('#nav .tab[data-v="library"]')},
+ {ic:"🗓",sel:()=>vis('#nav .tab[data-v="timeline"]')},
+ {ic:"📈",sel:()=>CUR==="play"&&vis("#ptrk"),art:()=>`<div class="t-mini" aria-hidden="true">${[1,2,3,4,5,6,7,8,9].map(i=>`<span class="${i<4?"done":i===4?"cur":""}">${i<4?"✔":i===4?4:"🔒"}</span>`).join("")}</div>`}];
+function startTour(i){TFOC=document.activeElement;TS=Math.max(0,Math.min(TOUR.length-1,i||0));const o=$("#tour");o.classList.add("on");document.body.classList.add("touring");drawTour();snd("open")}
+function endTour(go){const o=$("#tour");o.classList.remove("on");document.body.classList.remove("touring");TS=-1;LS.set(TKEY,"done");
+ if(go){closeAll();wsHide();show("play")}else if(TFOC&&TFOC.focus)try{TFOC.focus({preventScroll:true})}catch(e){}}
+function drawTour(){if(TS<0)return;const rtl=LANG==="ar",AL=rtl?"→":"←",AR=rtl?"←":"→",s=TOUR[TS],n=TOUR.length,last=TS===n-1,c=$("#tour .t-card");
+ H(c,`<div class="t-top"><span class="t-step">${t2("tourStep",TS+1,n)}</span><span class="t-dots" aria-hidden="true">${TOUR.map((x,j)=>`<i class="${j===TS?"on":j<TS?"past":""}"></i>`).join("")}</span><button class="t-x" type="button" data-t="skip" aria-label="${esc(t2("tourSkip"))}">✕</button></div>
+ <div class="t-body"><div class="t-ic" aria-hidden="true">${s.ic}</div><div><h3 id="tourT">${t2("tour"+(TS+1)+"T")}</h3><p id="tourD">${t2("tour"+(TS+1))}</p>${s.art?s.art():""}</div></div>
+ <div class="t-btns"><button class="btn wh sm" type="button" data-t="skip">${t2("tourSkip")}</button><span style="flex:1"></span>${TS?`<button class="btn wh sm" type="button" data-t="back">${AL} ${t2("tourBack")}</button>`:""}${last?`<button class="btn sm" type="button" data-t="go">▶ ${t2("tourStart")}</button>`:`<button class="btn tq sm" type="button" data-t="next">${t2("tourNext")} ${AR}</button>`}</div>`);
+ placeTour();setTimeout(()=>{const b=c.querySelector('[data-t="next"],[data-t="go"]');b&&b.focus({preventScroll:true})},30)}
+function placeTour(){if(TS<0)return;const o=$("#tour"),hole=o.querySelector(".t-hole"),c=o.querySelector(".t-card"),tg=TOUR[TS].sel();
+ o.classList.toggle("nohole",!tg);
+ if(tg){if(tg.closest("#ptrk"))tg.scrollIntoView({block:"nearest"});const r=tg.getBoundingClientRect(),p=8;
+  Object.assign(hole.style,{left:(r.left-p)+"px",top:(r.top-p)+"px",width:(r.width+p*2)+"px",height:(r.height+p*2)+"px"});
+  if(innerWidth<=600){c.style.left=c.style.top="";c.classList.add("dock");return}c.classList.remove("dock");
+  const cw=Math.min(420,innerWidth-24),ch=c.offsetHeight||260;let top=r.bottom+16;if(top+ch>innerHeight-8)top=Math.max(8,r.top-ch-16);
+  let left=r.left+r.width/2-cw/2;left=Math.max(12,Math.min(innerWidth-cw-12,left));c.style.left=left+"px";c.style.top=top+"px"}
+ else{c.classList.remove("dock");c.style.left=c.style.top=""}}
+document.body.insertAdjacentHTML("beforeend",`<div id="tour" role="dialog" aria-modal="true" aria-labelledby="tourT" aria-describedby="tourD"><div class="t-dim"></div><div class="t-hole"></div><div class="t-card" tabindex="-1"></div></div>`);
+$("#tour").addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;const a=b.dataset.t;snd("click");
+ if(a==="next"){TS++;drawTour()}else if(a==="back"){TS--;drawTour()}else if(a==="skip")endTour(false);else if(a==="go")endTour(true)});
+document.addEventListener("keydown",e=>{if(TS<0)return;
+ if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();endTour(false);return}
+ if(e.key==="ArrowRight"&&TS<TOUR.length-1){TS++;drawTour()}else if(e.key==="ArrowLeft"&&TS>0){TS--;drawTour()}
+ else if(e.key==="Tab"){const f=[...$("#tour .t-card").querySelectorAll("button")];if(!f.length)return;const i=f.indexOf(document.activeElement);
+  if(e.shiftKey&&(i<=0)){e.preventDefault();f[f.length-1].focus()}else if(!e.shiftKey&&(i===f.length-1||i<0)){e.preventDefault();f[0].focus()}}},true);
+addEventListener("resize",placeTour);addEventListener("scroll",placeTour,{passive:true});
 
 /* =========================== BOOT =========================== */
 (function(){
@@ -3127,6 +3361,7 @@ addEventListener("resize",()=>{if(!$("#ws").classList.contains("open"))return;if
  document.body.insertAdjacentHTML("beforeend",`<div id="office" class="v2ov" role="dialog" aria-modal="true" aria-label="Bureau du transitaire"></div><div id="ws" class="v2ov" role="dialog" aria-modal="true" aria-label="Workstation"><div class="ws-top"></div><div class="ws-desk" id="wsDesk"><div class="ws-icons" id="wsIcons"></div><div class="wins" id="wsWins"></div></div><div class="ws-dock" id="wsDock"></div></div><button id="wsBtn" type="button"><span class="scr" aria-hidden="true"></span><span class="lbl"></span><span class="tip"></span></button><div id="v2n" aria-live="polite"></div>`);
  $("#wsBtn").onclick=()=>wsOpen(null,"port");
  applyLang();renderNav();renderHome();renderTimeline();renderLibrary();renderSources();updFab();wsBtnUpd();
+ FIRSTVISIT=!LANG&&!loadSlot("guided")&&!loadSlot("imm");
  if(!LANG){LANG="en";applyLang();H("#lovB",langBtns().replace(/class="on"/g,""));$("#lov").classList.add("open")}
 })();
 
